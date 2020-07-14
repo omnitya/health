@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: jha.abhishek.healthrestendpoints.HealthRestEndpointsApplicationTests
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.62 s - in jha.abhishek.healthrestendpoints.HealthRestEndpointsApplicationTests
