@@ -1,16 +1,20 @@
 package jha.abhishek.healthrestendpoints;
 
+import java.util.Map;
+
 /**
  * @author omnity.jha
+ *
+ * This class contains utility methods for neo4j query Builder.
  */
-public class Neo4jQueryUtil {
+public class Neo4jQueryBuilderUtil {
 
     /**
      * This method builds query to match a given attribute;
      * @param attribute
      * @return
      */
-    public String matchAttribute(String attribute){
+    public static String matchAttribute(String attribute){
         StringBuilder query = new StringBuilder();
         query.append("MATCH (n)");
         query.append("WHERE ID(n)=");
@@ -27,7 +31,7 @@ public class Neo4jQueryUtil {
      * @param edge
      * @return
      */
-    public String matchTwoNodesWithEdge(String node1, String node2, String edge){
+    public static String matchTwoNodesWithEdge(String node1, String node2, String edge){
         StringBuilder query = new StringBuilder();
         query.append("MATCH (p:");
         query.append(node1);
@@ -51,7 +55,7 @@ public class Neo4jQueryUtil {
      * @param edge
      * @return
      */
-    public String matchThreeNodesWithEdge(String node1, String node2, String node3, String edge){
+    public static String matchThreeNodesWithEdge(String node1, String node2, String node3, String edge){
         StringBuilder query = new StringBuilder();
         query.append("MATCH (p:");
         query.append(node1);
@@ -76,7 +80,7 @@ public class Neo4jQueryUtil {
      * @param nodeId
      * @return
      */
-    public String detachDeleteNodeId(String nodeId){
+    public static String detachDeleteNodeId(String nodeId){
         StringBuilder query = new StringBuilder();
         query.append("MATCH (n)");
         query.append(" WHERE ID(n) = ");
@@ -93,7 +97,7 @@ public class Neo4jQueryUtil {
      * @param nodeAttrVal
      * @return
      */
-    public String detachDeleteNode(String node, String nodeAttribute, String nodeAttrVal){
+    public static String detachDeleteNode(String node, String nodeAttribute, String nodeAttrVal){
         StringBuilder query = new StringBuilder();
         query.append("MATCH (n:");
         query.append(node);
@@ -102,6 +106,33 @@ public class Neo4jQueryUtil {
         query.append(" = ");
         query.append(nodeAttrVal);
         query.append("DETACH DELETE n");
+
+        return query.toString();
+    }
+
+    /**
+     * This method will create a node with the given set of properties in Map.
+     * @param node
+     * @param map
+     * @return
+     */
+    public static String createFirstLevelNode(String node, Map map){
+
+        StringBuilder query = new StringBuilder();
+        query.append("CREATE (o:");
+        query.append(node);
+        if(!map.isEmpty()){
+            query.append("{");
+            map.forEach((k,v)->{
+                query.append(k);
+                query.append(":");
+                query.append(v);
+                query.append(",");
+            });
+            query.deleteCharAt(query.length() - 1);
+            query.append("}");
+        }
+        query.append(")");
 
         return query.toString();
     }
