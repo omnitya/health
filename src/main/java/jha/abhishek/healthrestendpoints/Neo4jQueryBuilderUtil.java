@@ -19,7 +19,7 @@ public class Neo4jQueryBuilderUtil {
         query.append("MATCH (n)");
         query.append("WHERE ID(n)=");
         query.append(attribute);
-        query.append(" RETURN n");
+        query.append(" RETURN n.name AS name");
 
         return  query.toString();
     }
@@ -133,6 +133,30 @@ public class Neo4jQueryBuilderUtil {
             query.append("}");
         }
         query.append(")");
+
+        return query.toString();
+    }
+
+    /**
+     * This method creates a relationship between two given nodes.
+     * @param node1
+     * @param node2
+     * @param edge
+     * @return
+     */
+    public static String create2NodeRelationship(String node1, String node1NameValue, String node2, String node2NameValue, String edge){
+        StringBuilder query = new StringBuilder();
+        query.append("MATCH (a:");
+        query.append(node1);
+        query.append(" {name:'");
+        query.append(node1NameValue);
+        query.append("'}), (b:");
+        query.append(node2);
+        query.append(" {name:'");
+        query.append(node2NameValue);
+        query.append("'}) CREATE (a)-[:");
+        query.append(edge);
+        query.append("]->(b)");
 
         return query.toString();
     }
